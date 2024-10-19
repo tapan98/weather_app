@@ -1,3 +1,5 @@
+// inspired by https://www.youtube.com/watch?v=6wTl0yqgBzU
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/pages/home_page.dart';
 

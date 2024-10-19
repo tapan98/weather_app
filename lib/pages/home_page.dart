@@ -14,20 +14,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final WeatherFactory _weatherFactory = WeatherFactory(OPENWEATHER_API_KEY);
 
-  Future<Weather> getWeather() async {
-    return _weatherFactory.currentWeatherByCityName("Delhi");
-  }
+  Future<Weather>? _weather;
+  String? _lastUpdated;
+  static const String _city = "Delhi";
 
   @override
   void initState() {
     super.initState();
+    // _weatherFactory.currentWeatherByCityName(_city).then((weather) {
+    _weather = Future<Weather>(
+      () {
+        debugPrint("initState(): updating weather data");
+        _lastUpdated = DateTime.now().toString();
+        return _weatherFactory.currentWeatherByCityName(_city);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: getWeather(),
+        future: _weather,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
@@ -38,7 +46,16 @@ class _HomePageState extends State<HomePage> {
             // show error
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [const Text("Error!"), Text("${snapshot.error}")],
+              children: [
+                const Text(
+                  "Error!",
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text("${snapshot.error}")
+              ],
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -70,6 +87,14 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.sizeOf(context).height * 0.02,
           ),
           _currentTemp(weather),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("last updated: $_lastUpdated"),
+              ],
+            ),
+          ),
         ],
       ),
     );
