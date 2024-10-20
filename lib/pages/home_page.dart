@@ -76,11 +76,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           _locationHeader(weather),
           SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.08,
+            height: MediaQuery.sizeOf(context).height * 0.03,
           ),
           _dateTimeInfo(weather),
           SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.05,
+            height: MediaQuery.sizeOf(context).height * 0.03,
           ),
           _weatherIcon(weather),
           SizedBox(
@@ -103,8 +103,8 @@ class _HomePageState extends State<HomePage> {
   Widget _locationHeader(Weather? weather) {
     return Text(
       weather?.areaName ?? "",
-      style: const TextStyle(
-        fontSize: 20,
+      style: TextStyle(
+        fontSize: MediaQuery.sizeOf(context).height * 0.03,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -120,12 +120,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             time,
-            style: const TextStyle(
-              fontSize: 35,
+            style: TextStyle(
+              fontSize: MediaQuery.sizeOf(context).height * 0.05,
             ),
-          ),
-          const SizedBox(
-            height: 10,
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -134,15 +131,17 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text(
                 weekday,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.sizeOf(context).height * 0.02,
                 ),
               ),
               const Text("  "),
               Text(
                 date,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.sizeOf(context).height * 0.02,
                 ),
               )
             ],
@@ -172,9 +171,9 @@ class _HomePageState extends State<HomePage> {
         ),
         Text(
           weather?.weatherDescription ?? "",
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: MediaQuery.sizeOf(context).height * 0.03,
           ),
         )
       ],
@@ -192,10 +191,18 @@ class _HomePageState extends State<HomePage> {
       children: [
         Text(
           currentTemp,
-          style: const TextStyle(
-              color: Colors.black, fontSize: 90, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: MediaQuery.sizeOf(context).height * 0.12,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        Text("Feels like $feelsLike"),
+        Text(
+          "Feels like $feelsLike",
+          style: TextStyle(
+            fontSize: MediaQuery.sizeOf(context).height * 0.02,
+          ),
+        ),
       ],
     );
   }
