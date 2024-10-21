@@ -34,33 +34,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: _weather,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            // display data
-            return buildWeatherUI(snapshot.data);
-          } else if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasError) {
-            // show error
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Error!",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: FutureBuilder(
+          future: _weather,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              // display data
+              return buildWeatherUI(snapshot.data);
+            } else if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasError) {
+              // show error
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Error!",
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text("${snapshot.error}")
-              ],
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+                  Text("${snapshot.error}")
+                ],
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
